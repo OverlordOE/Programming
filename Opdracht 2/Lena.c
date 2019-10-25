@@ -12,35 +12,42 @@
 void analyzeLena();
 
 int main () {
-    analyzeLena(0,512,160,380);
     analyzeLena(0,512,0,512);
     analyzeLena(100,400,100,400);
+    analyzeLena(0,512,160,380);
     return 0;
 }
 
 void analyzeLena(int beginY, int endY, int beginX, int endX) {
     double totalGrey;
     double average;
+    FILE *f  = fopen("Lena.txt", "w"); // open file for later use
+    if (f == NULL) {printf("error opening file"); exit(1);} // print error if file is not found
 
-
-    for (int i = beginY; i < endY; i++)
+    for (int i = beginY; i < endY; i++) // print each row
     {
-        for (int j = beginX; j < endX; j++)
+        for (int j = beginX; j < endX; j++) // for each row print all columns
         {
             totalGrey += lena[i][j];
-            if (lena[i][j] < 50) {printf(" ");}
-            else if (lena[i][j] < 70) {printf(".");}
-            else if (lena[i][j] < 90) {printf(":");}
-            else if (lena[i][j] < 110) {printf("-");}
-            else if (lena[i][j] < 130) {printf("=");}
-            else if (lena[i][j] < 150) {printf("+");}
-            else if (lena[i][j] < 170) {printf("*");}
-            else if (lena[i][j] < 190) {printf("#");}
-            else if (lena[i][j] < 210) {printf("%%");}
-            else {printf("@");}
+            // print ASCII value and store it in a file
+            if (lena[i][j] < 50) {printf(" "); fprintf(f, " ");}
+                else if (lena[i][j] < 70) {printf("."); fprintf(f, ".");}
+                else if (lena[i][j] < 90) {printf(":"); fprintf(f, ":");}
+                else if (lena[i][j] < 110) {printf("-"); fprintf(f, "-");}
+                else if (lena[i][j] < 130) {printf("="); fprintf(f, "=");}
+                else if (lena[i][j] < 150) {printf("+"); fprintf(f, "+");}
+                else if (lena[i][j] < 170) {printf("*"); fprintf(f, "*");}
+                else if (lena[i][j] < 190) {printf("#"); fprintf(f, "#");}
+                else if (lena[i][j] < 210) {printf("%%"); fprintf(f, "%%");}
+                else {printf("@"); fprintf(f, "@");}
         }
+        // enter after each column
         printf("\n");
+        fprintf(f, "\n");
     }
+
+    fclose(f); // close file
+    // calculate average
     average = totalGrey/((endX-beginX)*(endY-beginY));
     printf("Average grey value is: %f\n", average);
     totalGrey = 0;
