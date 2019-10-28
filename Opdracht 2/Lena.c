@@ -21,7 +21,7 @@ int main () {
 }
 
 void analyzeLena(int beginY, int endY, int beginX, int endX) {
-    FILE *f  = fopen("Lena.txt", "w"); // open file for later use
+    FILE *f  = fopen("Lena_klein.txt", "w"); // open file for later use
     if (f == NULL) {printf("error opening file"); exit(1);} // print error if file is not found
 
     for (int i = beginY; i < endY; i++) // print each row
